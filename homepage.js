@@ -1,6 +1,6 @@
 "use strict";
 import { rerenderCartNotification } from "./header.js";
-
+  const cardsSection = document.getElementById("gridContainerHomepage");
 const base_url = "https://v2.api.noroff.dev";
 
 async function fetchData() {
@@ -14,15 +14,17 @@ async function fetchData() {
 
     return jackets;
   } catch (error) {
-    alert("Something went wrong " + error)
-    
+  const skeletonDiv = document.querySelector(".skeleton-card-container")
+  skeletonDiv.textContent = "Something went wrong " + error;
+  skeletonDiv.style.display= "flex";
+  skeletonDiv.setAttribute("role", "alert")
   }
 }
 
 function createHomePage(jackets) {
-  const cardsSection = document.getElementById("gridContainerHomepage");
+
   cardsSection.textContent = "";
-  jackets.forEach(function (jacket) {
+  jackets?.forEach(function (jacket) {
     const card = document.createElement("a");
     card.classList.add("card");
 
@@ -79,17 +81,25 @@ let content = document.querySelector("#gridContainerHomepage");
 content.style.display = "none";
 skeleton.style.display = "grid";
 
+
+
 const jackets = await fetchData();
 
-createHomePage(jackets);
+if(jackets) {
 content.style.display = "grid";
-skeleton.style.display = "none";
+skeleton.style.display = "none"
 
-const femaleJackets = jackets.filter((jacket) => {
+}
+
+
+createHomePage(jackets);
+;
+
+const femaleJackets = jackets?.filter((jacket) => {
   return jacket.gender == "Female";
 });
 
-const maleJackets = jackets.filter((jacket) => {
+const maleJackets = jackets?.filter((jacket) => {
   return jacket.gender == "Male";
 });
 const heading = document.getElementById("homepage-title");

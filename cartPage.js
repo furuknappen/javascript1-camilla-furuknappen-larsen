@@ -69,7 +69,6 @@ const beforePriceDiv = document.createElement("p")
           </svg>`;
 
  totalPrice += priceValue;
- console.log("total", priceValue, "and", totalPrice)
 const priceContainer = document.createElement("div")
 priceContainer.classList.add("price-container")
 priceContainer.append(beforePriceDiv, price)
@@ -85,7 +84,6 @@ priceContainer.append(beforePriceDiv, price)
 
   document.querySelector("#goToCheckout").href = "checkout-page.html";
 });
-console.log("Final totalPrice:", totalPrice)
 document.querySelector(".discounted").textContent =
   totalDiscount.toFixed(2) + " kr";
 document.querySelector(".totalPrice").textContent = totalPrice.toFixed(2);

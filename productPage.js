@@ -21,13 +21,21 @@ async function fetchData() {
 
     return item;
   } catch (error) {
-    alert("Could not fetch data: " + error)
+     const skeletonDiv = document.querySelector(".skeleton-container");
+     skeletonDiv.textContent = "Could not fetch data: " + error;
+     skeletonDiv.setAttribute("role", "alert")
+     
+  skeletonDiv.style.height= "40rem";
+return null
   }
 }
 
 let notificationCartNumber = "";
 async function displayItem() {
   const item = await fetchData();
+  if(!item) {
+    return null
+  }
   document.querySelector(".itemImage").src = item.image.url;
   document.querySelector(".itemImage").alt = item.image.alt;
   document.querySelector(".h1Itemname").textContent = item.title;
@@ -103,6 +111,7 @@ async function displayItem() {
     noSizeError.style.display = "none";
     addToCart(item, selectedSize.value);
   });
+  return item
 }
 
 function addToCart(item, size) {
@@ -130,11 +139,15 @@ window.onload = async function () {
   let content = document.querySelector(".content");
 
   content.style.display = "none";
-  skeleton.style.display = "flex";
+  skeleton.style.display = "flex !important";
 
-  await displayItem();
+  const item = await displayItem();
+
+if(item) {
   content.style.display = "flex";
-  skeleton.style.display = "none";
+  skeleton.style.display = "none";  
+}
+
 };
 
 // TOAST NOTIFICATION
