@@ -32,13 +32,22 @@ cart.forEach((item, index) => {
 
   let price = document.createElement("p");
   price.classList.add("itemInfo");
+
+const beforePriceDiv = document.createElement("p")
+  // beforePriceDiv.textContent ="test"
+  beforePriceDiv.classList.add("before-price-cart")
+
+  let priceValue;
   if (item.onSale) {
+   
+   beforePriceDiv.textContent = "Before: " + item.price;
+
     price.textContent = item.discountedPrice + "kr";
-    price = item.discountedPrice;
+    priceValue = item.discountedPrice;
     totalDiscount += item.price - item.discountedPrice;
   } else {
     price.textContent = item.price + "kr";
-    price = item.price;
+    priceValue = item.price;
   }
 
   title.classList.add("itemInfo");
@@ -58,7 +67,13 @@ cart.forEach((item, index) => {
             <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
           </svg>`;
-  cartText.append(title, size, price);
+
+ totalPrice += priceValue;
+ console.log("total", priceValue, "and", totalPrice)
+const priceContainer = document.createElement("div")
+priceContainer.classList.add("price-container")
+priceContainer.append(beforePriceDiv, price)
+  cartText.append(title, size, priceContainer);
   productLine.append(image, cartText);
   productLine.append(trashBtn);
   productDisplay.appendChild(productLine);
@@ -67,10 +82,10 @@ cart.forEach((item, index) => {
     removeItemFromCart(index);
   });
 
-  totalPrice += price;
+
   document.querySelector("#goToCheckout").href = "checkout-page.html";
 });
-
+console.log("Final totalPrice:", totalPrice)
 document.querySelector(".discounted").textContent =
   totalDiscount.toFixed(2) + " kr";
 document.querySelector(".totalPrice").textContent = totalPrice.toFixed(2);

@@ -17,19 +17,20 @@ cart.forEach((item) => {
 
   let price = document.createElement("span");
   price.classList.add("itemInfo");
+  
+  let priceValue;
   if (item.onSale) {
     price.textContent = item.discountedPrice + "kr";
-    price = item.discountedPrice;
-    totalDiscount += item.price - item.discountedPrice;
+    priceValue = item.discountedPrice;
   } else {
     price.textContent = item.price + "kr";
-    price = item.price;
+    priceValue = item.price;
   }
 
   product.append(image, title, price);
   miniCartContainer.append(product);
 
-  totalPrice += price;
+  totalPrice += priceValue;
 });
 
 document.querySelector(".totalPrice").textContent =
